@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_name">Bienvenue! Comment t’appelles-tu?</string>
+    <string name="welcome_editText_hint">Veuillez taper votre nom</string>
+    <string name="welcome_play_button">Commençons le jeu!</string>
+</resources>
