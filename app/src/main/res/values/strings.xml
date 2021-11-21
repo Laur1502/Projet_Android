@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TP OCR</string>
+    <string name="welcome_name">Welcome! What\'s your name?</string>
+</resources>
