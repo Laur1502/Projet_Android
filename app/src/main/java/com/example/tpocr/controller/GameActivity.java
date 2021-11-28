@@ -20,6 +20,7 @@ import com.example.tpocr.R;
 import com.example.tpocr.model.model.model.Question;
 import com.example.tpocr.model.model.model.QuestionBank;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -30,14 +31,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mGameButton2;
     private Button mGameButton3;
     private Button mGameButton4;
-    QuestionBank mQuestionBank = generateQuestion();
+    QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
-    private int mRemainingQuestionCount;
+    private int mRemainingQuestionCount=3;
     private int mScore;
     public static final String BUNDLE_EXTRA_SCORE = "BUNDLE_EXTRA_SCORE";
     private boolean mEnableTouchEvents;
     public static final String BUNDLE_STATE_SCORE = "BUNDLE_STATE_SCORE";
     public static final String BUNDLE_STATE_QUESTION = "BUNDLE_STATE_QUESTION";
+    public static final String BUNDLE_QUESTION_BANK = "BUNDLE_QUESTION_BANK";
     //public static final String BUNDLE_STATE_QUESTION_CURRENT = "BUNDLE_STATE_QUESTION_CURRENT";
 
     @Override
@@ -51,6 +53,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         outState.putInt(BUNDLE_STATE_SCORE, mScore);
         outState.putInt(BUNDLE_STATE_QUESTION, mRemainingQuestionCount);
+        outState.putParcelable(BUNDLE_QUESTION_BANK, mQuestionBank);
         //outState.putSerializable(BUNDLE_STATE_QUESTION_CURRENT, (Serializable) mCurrentQuestion);
     }
 
@@ -70,12 +73,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mGameButton3.setOnClickListener(this);
         mGameButton4.setOnClickListener(this);
 
-        mCurrentQuestion = mQuestionBank.getCurrentQuestion();
-        displayQuestion(mCurrentQuestion);
+
 
         mEnableTouchEvents = true;
 
-        mRemainingQuestionCount = 3;
         mScore = 0;
 
 
@@ -83,11 +84,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //Log.d("STATE", savedInstanceState.toString());
             mScore = savedInstanceState.getInt(BUNDLE_STATE_SCORE);
             mRemainingQuestionCount = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
+            mQuestionBank = savedInstanceState.getParcelable(BUNDLE_QUESTION_BANK);
+
+
         } else {
             //Log.d("FAIL", savedInstanceState.toString());
             mScore = 0;
-            mRemainingQuestionCount = 4;
+            mRemainingQuestionCount = 3;
+            mQuestionBank = generateQuestion();
+
         }
+
+        mQuestionBank.setCurrentIndex(3 - mRemainingQuestionCount);
+        mCurrentQuestion = mQuestionBank.getCurrentQuestion();
+        Log.d("int"," " + mQuestionBank.getCurrentIndex());
+        displayQuestion(mCurrentQuestion);
 
     }
 
