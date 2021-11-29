@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private Button mPlayButton;
     private User mUser;
     private static final int GAME_ACTIVITY_REQUEST_CODE = 42;
+    private DatabaseManager databaseManager;
+
+
 
     // sauvegarde les données choisies dans un fichier XML (ici le fichier est "SHARED_PREF_USER_INFO")
     private static final String SHARED_PREF_USER_INFO = "SHARED_PREF_USER_INFO";
@@ -51,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
         String firstName = getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE).getString(SHARED_PREF_USER_INFO_NAME, null);
 
+        databaseManager = new DatabaseManager(this);
+//        databaseManager.insertPlayer("Elodie");
+//        databaseManager.insertPlayer("Diyé");
+//        databaseManager.insertPlayer("Kenza");
+        databaseManager.insertPlayer("LAURIIIINE");
+
+        databaseManager.close();
+
         mNameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+//                databaseManager.insertPlayer(mNameEditText.getText().toString());
+//                databaseManager.close();
+
                 //stock le nom de l'user dans le fichier XML
                 getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE)
                         .edit()
@@ -80,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
                 startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
+
+
             }
         });
 
