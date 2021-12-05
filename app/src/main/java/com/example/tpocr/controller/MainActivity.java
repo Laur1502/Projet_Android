@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private User mUser;
     private static final int GAME_ACTIVITY_REQUEST_CODE = 42;
     private DatabaseManager databaseManager;
+    private MediaPlayer mediaPlayer;
 
 
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
         mGreetingTextView = findViewById(R.id.main_textview_greeting);
         mNameEditText = findViewById(R.id.main_edittext_name);
         mPlayButton = findViewById(R.id.main_button_play);
@@ -84,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                databaseManager.insertPlayer(mNameEditText.getText().toString());
-//                databaseManager.close();
+                databaseManager.insertPlayer(mNameEditText.getText().toString());
+                databaseManager.close();
 
                 //stock le nom de l'user dans le fichier XML
                 getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE)
@@ -104,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
         //mUser = findViewById(R.id.main_edittext_name);
 
 //        mUser.setFirstName(mNameEditText.getText().toString());
+
+    }
+
+    public void playSound(View view) {
+
+        mediaPlayer.start();
 
     }
 }

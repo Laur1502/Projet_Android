@@ -3,5 +3,6 @@
     <string name="welcome_name">Welcome! What\'s your name?</string>
     <string name="welcome_editText_hint">Please type your name</string>
     <string name="welcome_play_button">Let\'s Play</string>
+    <string name="sound_play">Sound</string>
 
 </resources>
