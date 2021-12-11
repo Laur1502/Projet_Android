@@ -36,6 +36,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mGameButton2;
     private Button mGameButton3;
     private Button mGameButton4;
+    private Button mFakeSkipButton;
     QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
     private int mRemainingQuestionCount=3;
@@ -78,7 +79,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
         mQuestionTextView = findViewById(R.id.game_activity_textview_question);
-        //mTimerTextView = findViewById(R.id.game_activity_textview_cd);
+        mTimerTextView = findViewById(R.id.game_activity_textview_cd);
         mGameButton1 = findViewById(R.id.game_activity_button_1);
         mGameButton2 = findViewById(R.id.game_activity_button_2);
         mGameButton3 = findViewById(R.id.game_activity_button_3);
@@ -135,6 +136,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mCurrentQuestion = mQuestionBank.getCurrentQuestion();
         Log.d("int"," " + mQuestionBank.getCurrentIndex());
         displayQuestion(mCurrentQuestion);
+        timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+        startCountDown();
 
     }
 
@@ -200,7 +203,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             index = 2;
         } else if (v == mGameButton4) {
             index = 3;
-        } else {
+        } else if (v == mFakeSkipButton) {
+            index = -1;
+        }
+        else {
             throw new IllegalStateException("Unknown clicked view : " + v);
         }
 
@@ -214,8 +220,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         //désactive les boutons
         mEnableTouchEvents = false;
-
-
+        countDownTimer.cancel();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -270,6 +275,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFinish() {
                 timeLeftInMillis =0;
+                onClick(mFakeSkipButton);
                 updateCountDownText();
 
             }
