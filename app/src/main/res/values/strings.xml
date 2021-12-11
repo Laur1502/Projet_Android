@@ -7,5 +7,12 @@
     <string name="welcome_signup">Register</string>
     <string name="welcome_signin">Sign in</string>
 
+    <string name="home_welcome">Welcome</string>
+    <string name="home_choice">What do you want to do ?</string>
+
+    <string name="normal_game_mode">Normal game mode</string>
+    <string name="timer_game_mode">Timed game mode</string>
+    <string name="scores_page">Table of scores</string>
+
 
 </resources>
