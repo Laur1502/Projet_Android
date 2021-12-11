@@ -7,7 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,10 +26,12 @@ import com.example.tpocr.model.model.model.QuestionBank;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TextView mQuestionTextView;
+    private TextView mTimerTextView;
     private Button mGameButton1;
     private Button mGameButton2;
     private Button mGameButton3;
@@ -41,6 +46,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BUNDLE_STATE_QUESTION = "BUNDLE_STATE_QUESTION";
     public static final String BUNDLE_QUESTION_BANK = "BUNDLE_QUESTION_BANK";
     //public static final String BUNDLE_STATE_QUESTION_CURRENT = "BUNDLE_STATE_QUESTION_CURRENT";
+
+    public static final long COUNTDOWN_IN_MILLIS = 30000;
+    //private ColorStateList textColorDefaultCd; //changement couleur countdown
+
+    private CountDownTimer countDownTimer;
+    private long timeLeftInMillis;
+
+    private MediaPlayer mediaPlayer;
+    private Button mSoundPlayButton;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -62,7 +76,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
         mQuestionTextView = findViewById(R.id.game_activity_textview_question);
+        //mTimerTextView = findViewById(R.id.game_activity_textview_cd);
         mGameButton1 = findViewById(R.id.game_activity_button_1);
         mGameButton2 = findViewById(R.id.game_activity_button_2);
         mGameButton3 = findViewById(R.id.game_activity_button_3);
@@ -73,7 +89,27 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mGameButton3.setOnClickListener(this);
         mGameButton4.setOnClickListener(this);
 
+        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
+        mSoundPlayButton = findViewById(R.id.sound_button_play);
 
+        mSoundPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mediaPlayer.isPlaying())
+                {
+                    pauseSound();
+                    //mSoundPlayButton.setBackgroundResource(R.drawable.play);
+                }
+
+                else
+                {
+                    playSound();
+                    //mSoundPlayButton.setBackgroundResource(R.drawable.pause);
+                }
+            }
+        });
+
+        //textColorDefaultCd = mTimerTextView.getTextColors();
 
         mEnableTouchEvents = true;
 
@@ -148,6 +184,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mGameButton2.setText(question.getChoiceList().get(1));
         mGameButton3.setText(question.getChoiceList().get(2));
         mGameButton4.setText(question.getChoiceList().get(3));
+
+
     }
 
     @Override
@@ -177,6 +215,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //désactive les boutons
         mEnableTouchEvents = false;
 
+
+
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -190,6 +230,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (mRemainingQuestionCount > 0) {
                     mCurrentQuestion = mQuestionBank.getNextQuestion();
                     displayQuestion(mCurrentQuestion);
+
+                    timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+                    startCountDown();
+
                 } else {
                     endGame();
                 }
@@ -201,6 +245,35 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
+    }
+
+    public void updateCountDownText(){
+        int minutes = (int) (timeLeftInMillis/1000)/60;
+        int seconds = (int) (timeLeftInMillis/1000) %60;
+
+        String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        mTimerTextView.setText(timeFormatted);
+
+
+    }
+
+    private void startCountDown(){
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                timeLeftInMillis =0;
+                updateCountDownText();
+
+            }
+        }.start();
     }
 
     private void endGame(){
@@ -220,4 +293,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 .create()
                 .show();
     }
+
+    protected void onDestroy(){
+        super.onDestroy();
+        if(countDownTimer != null){
+            countDownTimer.cancel();
+        }
+    }
+
+    public void playSound() {
+
+        mediaPlayer.start();
+
+    }
+
+
+
+    public void pauseSound() {
+
+        mediaPlayer.stop();
+
+    }
 }
+

@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int GAME_ACTIVITY_REQUEST_CODE = 42;
     private DatabaseManager databaseManager;
     private MediaPlayer mediaPlayer;
+    private Button mSoundPlayButton;
 
 
 
@@ -49,10 +50,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
+
+
         mGreetingTextView = findViewById(R.id.main_textview_greeting);
         mNameEditText = findViewById(R.id.main_edittext_name);
         mPlayButton = findViewById(R.id.main_button_play);
+
+        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
+        mSoundPlayButton = findViewById(R.id.sound_button_play);
+
+        mSoundPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mediaPlayer.isPlaying())
+                {
+                    pauseSound();
+                    //mSoundPlayButton.setBackgroundResource(R.drawable.play);
+                }
+
+                else
+                {
+                    playSound();
+                    //mSoundPlayButton.setBackgroundResource(R.drawable.pause);
+                }
+            }
+        });
 
         mPlayButton.setEnabled(false);
 
@@ -110,9 +132,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void playSound(View view) {
+    public void playSound() {
 
         mediaPlayer.start();
+
+    }
+
+    public void pauseSound() {
+
+        mediaPlayer.stop();
 
     }
 }
