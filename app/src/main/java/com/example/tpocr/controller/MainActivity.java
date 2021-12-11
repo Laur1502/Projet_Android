@@ -12,24 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.tpocr.R;
 import com.example.tpocr.model.model.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mGreetingTextView;
-    private EditText mNameEditText;
-    private Button mPlayButton;
-    private User mUser;
+    private EditText username, password, repassword;
+    private Button signup, signin;
+
     private static final int GAME_ACTIVITY_REQUEST_CODE = 42;
     private DatabaseManager databaseManager;
 
-
-
-    // sauvegarde les données choisies dans un fichier XML (ici le fichier est "SHARED_PREF_USER_INFO")
-    private static final String SHARED_PREF_USER_INFO = "SHARED_PREF_USER_INFO";
-    private static final String SHARED_PREF_USER_INFO_NAME = "SHARED_PREF_USER_INFO_NAME";
 
     //Récupère le score de gameActivity
     @Override
@@ -47,23 +42,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mGreetingTextView = findViewById(R.id.main_textview_greeting);
-        mNameEditText = findViewById(R.id.main_edittext_name);
-        mPlayButton = findViewById(R.id.main_button_play);
-
-        mPlayButton.setEnabled(false);
-
-        String firstName = getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE).getString(SHARED_PREF_USER_INFO_NAME, null);
-
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        repassword = (EditText) findViewById(R.id.repassword);
+        signup = (Button) findViewById(R.id.btnsignup);
+        signin = (Button) findViewById(R.id.btnsignin);
         databaseManager = new DatabaseManager(this);
-//        databaseManager.insertPlayer("Elodie");
-//        databaseManager.insertPlayer("Diyé");
-//        databaseManager.insertPlayer("Kenza");
-        databaseManager.insertPlayer("LAURIIIINE");
 
         databaseManager.close();
 
-        mNameEditText.addTextChangedListener(new TextWatcher() {
+        username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -76,34 +64,69 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                mPlayButton.setEnabled(!s.toString().isEmpty());
+//                mPlayButton.setEnabled(!s.toString().isEmpty());
             }
         });
 
-        mPlayButton.setOnClickListener(new View.OnClickListener(){
+//        mPlayButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+////                databaseManager.insertPlayer(username.getText().toString());
+////                databaseManager.close();
+//
+//
+//                Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
+//                startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
+//
+//
+//            }
+//        });
+
+        signup.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View view){
+                String user = username.getText().toString();
+                String pass = password.getText().toString();
+                String repass = repassword.getText().toString();
 
-//                databaseManager.insertPlayer(mNameEditText.getText().toString());
-//                databaseManager.close();
-
-                //stock le nom de l'user dans le fichier XML
-                getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE)
-                        .edit()
-                        .putString(SHARED_PREF_USER_INFO_NAME,mNameEditText.getText().toString())
-                        .apply();
-
-                Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-                startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
-
+                if(user.equals("") || pass.equals("") || repass.equals("")){
+                    Toast.makeText(MainActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    if(pass.equals(repass)){
+                        Boolean checkuser = databaseManager.checkUsername(user);
+                        if(checkuser == false){
+                            Boolean insert = databaseManager.insertPlayer(user, pass);
+                            if(insert == true){
+                                Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(intent);
+                            }else{
+                                Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "User already exists ! Please sign in", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(MainActivity.this, "Passwords not matching", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
             }
         });
 
-        //initialisation du prénom du joueur
-        //mUser = findViewById(R.id.main_edittext_name);
+        signin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
 
-//        mUser.setFirstName(mNameEditText.getText().toString());
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
 
     }
 }

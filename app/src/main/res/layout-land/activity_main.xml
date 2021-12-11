@@ -22,16 +22,44 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/welcome_editText_hint"
+        android:hint="@string/welcome_username"
         android:minHeight="48dp" />
 
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/welcome_password" />
+
+
+    <EditText
+        android:id="@+id/repassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/welcome_repassword" />
+
+
     <Button
-        android:id="@+id/main_button_play"
+        android:id="@+id/btnsignup"
         android:layout_width="160dp"
-        android:layout_height="73dp"
+        android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
-        android:text="@string/welcome_play_button" />
+        android:text="@string/welcome_signup"/>
+
+    <Button
+        android:id="@+id/btnsignin"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:text="@string/welcome_signin"/>
 
 
 </LinearLayout>
