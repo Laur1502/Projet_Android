@@ -1,7 +1,6 @@
 package com.example.tpocr.controller;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,8 +19,6 @@ import com.example.tpocr.R;
 import com.example.tpocr.model.model.model.Question;
 import com.example.tpocr.model.model.model.QuestionBank;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.Arrays;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
@@ -111,8 +108,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Jake Wharton",
                         "Paul Smith"
                 ),
-                0
-        );
+                0,
+                "test");
 
         Question question2 = new Question(
                 "When did the first man land on the moon?",
@@ -122,8 +119,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "1967",
                         "1969"
                 ),
-                3
-        );
+                3,
+                "wikiLink");
 
         Question question3 = new Question(
                 "What is the house number of The Simpsons?",
@@ -133,8 +130,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "666",
                         "742"
                 ),
-                3
-        );
+                3,
+                "wikiLink");
 
 
         return new QuestionBank(Arrays.asList(question1, question2, question3));
