@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.tpocr.R;
 
+import java.io.Serializable;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText username, password;
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                         edit.putString("username", user);
                         edit.apply();
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.putExtra("UserName", username.getText().toString());
                         startActivity(intent);
                     }else{
                         Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
