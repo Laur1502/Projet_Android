@@ -43,10 +43,6 @@ public class HomeActivity extends AppCompatActivity {
         if(intent.hasExtra("UserName")){
             namePlayer = intent.getStringExtra("UserName");
         }
-        TextView textView = (TextView) findViewById(R.id.home_textview_greeting);
-        textView.setText("Welcome " + namePlayer + " !");
-//        Log.d("TEST","BLABLAAAAAAA " + user);
-
 
         SharedPreferences userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
         String username = userDetails.getString("username","");
