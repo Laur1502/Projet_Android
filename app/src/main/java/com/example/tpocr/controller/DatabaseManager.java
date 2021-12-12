@@ -147,9 +147,95 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 3,
                 "https://fr.wikipedia.org/wiki/Les_Simpson");
 
+        Question question4 = new Question(
+                "Which country won the 2014 football world cup in 2014?",
+                Arrays.asList(
+                        "Brazil",
+                        "Argentina",
+                        "Germany",
+                        "Italy"
+                ),
+                2,
+                "https://fr.wikipedia.org/wiki/Coupe_du_monde_de_football_2014");
+
+        Question question5 = new Question(
+                "Who was the king of gods in Greek mythology?",
+                Arrays.asList(
+                        "Apollon",
+                        "Zeus",
+                        "Athena",
+                        "Hermès"
+                ),
+                1,
+                "https://fr.wikipedia.org/wiki/Zeus");
+
+        Question question6 = new Question(
+                "What is the capital of Australia?",
+                Arrays.asList(
+                        "Sydney",
+                        "New York",
+                        "Canberra",
+                        "Melbourne"
+                ),
+                3,
+                "https://fr.wikipedia.org/wiki/Australie");
+
+        Question question7 = new Question(
+                "What is the longest river in the world?",
+                Arrays.asList(
+                        "the Amazon",
+                        "the Nil",
+                        "the Mississippi",
+                        "the Congo"
+                ),
+                0,
+                "https://fr.wikipedia.org/wiki/Liste_des_plus_longs_cours_d%27eau");
+
+        Question question8 = new Question(
+                "Who wrote Les Miserables ?",
+                Arrays.asList(
+                        "William Shakespeare",
+                        "Victor Hugo",
+                        "Albert Camus",
+                        "Charles Dickens"
+                ),
+                1,
+                "https://fr.wikipedia.org/wiki/Les_Mis%C3%A9rables");
+
+        Question question9 = new Question(
+                "What are the three primary colors ?",
+                Arrays.asList(
+                        "Blue Red White",
+                        "Red Yellow Purple",
+                        "Blue Red Yellow",
+                        "Yellow Pink Green"
+                ),
+                3,
+                "https://fr.wikipedia.org/wiki/Couleur_primaire");
+
+        Question question10 = new Question(
+                "In computing what is RAM short for ?",
+                Arrays.asList(
+                        "Random Access Memory",
+                        "Real Audio Movie",
+                        "Royal Air Maroc",
+                        "Removing A Mistake"
+                ),
+                0,
+                "https://fr.wikipedia.org/wiki/M%C3%A9moire_vive");
+
+
+
         addQuestion(question1, db);
         addQuestion(question2, db);
         addQuestion(question3, db);
+        addQuestion(question4, db);
+        addQuestion(question5, db);
+        addQuestion(question6, db);
+        addQuestion(question7, db);
+        addQuestion(question8, db);
+        addQuestion(question9, db);
+        addQuestion(question10, db);
     }
 
     private void addQuestion(Question question, SQLiteDatabase db){

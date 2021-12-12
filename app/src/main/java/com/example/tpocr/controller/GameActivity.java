@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -35,9 +37,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mGameButton3;
     private Button mGameButton4;
     private Button mFakeSkipButton;
+    private String correctornot;
     QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
-    private int mRemainingQuestionCount=3;
+    private int questionNumber=9;
+    private int mRemainingQuestionCount=questionNumber;
     private int mScore;
     public static final String BUNDLE_EXTRA_SCORE = "BUNDLE_EXTRA_SCORE";
     private boolean mEnableTouchEvents;
@@ -46,7 +50,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BUNDLE_QUESTION_BANK = "BUNDLE_QUESTION_BANK";
     //public static final String BUNDLE_STATE_QUESTION_CURRENT = "BUNDLE_STATE_QUESTION_CURRENT";
 
-    public static final long COUNTDOWN_IN_MILLIS = 30000;
+    public static final long COUNTDOWN_IN_MILLIS = 10000;
     //private ColorStateList textColorDefaultCd; //changement couleur countdown
 
     private CountDownTimer countDownTimer;
@@ -54,6 +58,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private MediaPlayer mediaPlayer;
     private Button mSoundPlayButton;
+
+
+    int mGamemode;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -72,12 +79,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
+        mGamemode = userDetails.getInt("gamemode",0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
         mQuestionTextView = findViewById(R.id.game_activity_textview_question);
         mTimerTextView = findViewById(R.id.game_activity_textview_cd);
+        if(mGamemode==1) mTimerTextView.setVisibility(View.VISIBLE);
+        else mTimerTextView.setVisibility(View.INVISIBLE);
         mGameButton1 = findViewById(R.id.game_activity_button_1);
         mGameButton2 = findViewById(R.id.game_activity_button_2);
         mGameButton3 = findViewById(R.id.game_activity_button_3);
@@ -125,12 +137,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             //Log.d("FAIL", savedInstanceState.toString());
             mScore = 0;
-            mRemainingQuestionCount = 3;
+            mRemainingQuestionCount = questionNumber;
             mQuestionBank = generateQuestion();
 
         }
 
-        mQuestionBank.setCurrentIndex(3 - mRemainingQuestionCount);
+        mQuestionBank.setCurrentIndex(questionNumber - mRemainingQuestionCount);
         mCurrentQuestion = mQuestionBank.getCurrentQuestion();
         Log.d("int"," " + mQuestionBank.getCurrentIndex());
         displayQuestion(mCurrentQuestion);
@@ -149,7 +161,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Paul Smith"
                 ),
                 0,
-                "test");
+                "https://en.wikipedia.org/wiki/Andy_Rubin");
 
         Question question2 = new Question(
                 "When did the first man land on the moon?",
@@ -160,7 +172,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "1969"
                 ),
                 3,
-                "wikiLink");
+                "https://en.wikipedia.org/wiki/Apollo_11");
 
         Question question3 = new Question(
                 "What is the house number of The Simpsons?",
@@ -171,10 +183,87 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "742"
                 ),
                 3,
-                "wikiLink");
+                "https://en.wikipedia.org/wiki/The_Simpsons_house");
+
+        Question question4 = new Question(
+                "Which country won the 2014 football world cup in 2014?",
+                Arrays.asList(
+                        "Brazil",
+                        "Argentina",
+                        "Germany",
+                        "Italy"
+                ),
+                2,
+                "https://fr.wikipedia.org/wiki/Coupe_du_monde_de_football_2014");
+
+        Question question5 = new Question(
+                "Who was the king of gods in Greek mythology?",
+                Arrays.asList(
+                        "Apollon",
+                        "Zeus",
+                        "Athena",
+                        "Hermès"
+                ),
+                1,
+                "https://fr.wikipedia.org/wiki/Zeus");
+
+        Question question6 = new Question(
+                "What is the capital of Australia?",
+                Arrays.asList(
+                        "Sydney",
+                        "New York",
+                        "Canberra",
+                        "Melbourne"
+                ),
+                3,
+                "https://fr.wikipedia.org/wiki/Australie");
+
+        Question question7 = new Question(
+                "What is the longest river in the world?",
+                Arrays.asList(
+                        "the Amazon",
+                        "the Nil",
+                        "the Mississippi",
+                        "the Congo"
+                ),
+                0,
+                "https://fr.wikipedia.org/wiki/Liste_des_plus_longs_cours_d%27eau");
+
+        Question question8 = new Question(
+                "Who wrote Les Miserables ?",
+                Arrays.asList(
+                        "William Shakespeare",
+                        "Victor Hugo",
+                        "Albert Camus",
+                        "Charles Dickens"
+                ),
+                1,
+                "https://fr.wikipedia.org/wiki/Les_Mis%C3%A9rables");
+
+        Question question9 = new Question(
+                "What are the three primary colors ?",
+                Arrays.asList(
+                        "Blue Red White",
+                        "Red Yellow Purple",
+                        "Blue Red Yellow",
+                        "Yellow Pink Green"
+                ),
+                3,
+                "https://fr.wikipedia.org/wiki/Couleur_primaire");
+
+        Question question10 = new Question(
+                "In computing what is RAM short for ?",
+                Arrays.asList(
+                        "Random Access Memory",
+                        "Real Audio Movie",
+                        "Royal Air Maroc",
+                        "Removing A Mistake"
+                ),
+                0,
+                "https://fr.wikipedia.org/wiki/M%C3%A9moire_vive");
 
 
-        return new QuestionBank(Arrays.asList(question1, question2, question3));
+        return new QuestionBank(Arrays.asList(question1, question2, question3, question5,question6, question7, question8, question9, question10));
 
     }
 
@@ -210,45 +299,88 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         // Bonne réponse / mauvaise
         if (index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
-            Toast.makeText(this, "Correct !", Toast.LENGTH_SHORT).show();
+            correctornot="Correct !";
             mScore++;
         } else {
-            Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+            correctornot="Incorrect !";
         }
 
         //désactive les boutons
         mEnableTouchEvents = false;
         countDownTimer.cancel();
 
-        new Handler().postDelayed(new Runnable() {
+        if(mGamemode==1) {
+            Toast.makeText(this, correctornot, Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
 
-            @Override
-            public void run() {
-                // If this is the last question, ends the game.
-                // Else, display the next question.
+                @Override
+                public void run() {
+                    // If this is the last question, ends the game.
+                    // Else, display the next question.
 
-                // passer à la question suivante / fin de partie
-                mRemainingQuestionCount--;
+                    // passer à la question suivante / fin de partie
+                    mRemainingQuestionCount--;
 
-                if (mRemainingQuestionCount > 0) {
-                    mCurrentQuestion = mQuestionBank.getNextQuestion();
-                    displayQuestion(mCurrentQuestion);
+                    if (mRemainingQuestionCount > 0) {
+                        mCurrentQuestion = mQuestionBank.getNextQuestion();
+                        displayQuestion(mCurrentQuestion);
 
-                    timeLeftInMillis = COUNTDOWN_IN_MILLIS;
-                    startCountDown();
+                        timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+                        startCountDown();
 
-                } else {
-                    endGame();
+                    } else {
+                        endGame();
+                    }
+                    // on réactive les boutons après le timer
+                    mEnableTouchEvents = true;
                 }
-                // on réactive les boutons après le timer
-                mEnableTouchEvents = true;
-            }
-        }, 2_000); // LENGTH_SHORT is usually 2 second long
+                }, 1_000); // LENGTH_SHORT is usually 2 second long*/
+        }
+        else createAlterDialog(mQuestionBank.getCurrentQuestion());
 
+    }
 
+    private void createAlterDialog(Question q){
+        AlertDialog.Builder alertDialog1  = new AlertDialog.Builder(this);
+        String str = "You are " + correctornot + " ! \n"  ;
+        alertDialog1.setTitle(str)
+                .setMessage("Do you want to know more about this question ? ")
+                .setIcon(R.mipmap.ic_launcher)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String l = q.getWikiLink();
+                        Uri uri= Uri.parse(l);
+                        Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+                        startActivity(intent);
+                        showNextQuestion();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showNextQuestion();
+                    }
+                })
+                .create()
+                .show();
+    }
 
+    public void showNextQuestion(){
+        mRemainingQuestionCount--;
 
+        if (mRemainingQuestionCount > 0) {
+            mCurrentQuestion = mQuestionBank.getNextQuestion();
+            displayQuestion(mCurrentQuestion);
 
+            timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+            startCountDown();
+
+        } else {
+            endGame();
+        }
+        // on réactive les boutons après le timer
+        mEnableTouchEvents = true;
     }
 
     public void updateCountDownText(){
@@ -273,7 +405,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFinish() {
                 timeLeftInMillis =0;
-                onClick(mFakeSkipButton);
+                if(mGamemode==1) onClick(mFakeSkipButton);
                 updateCountDownText();
 
             }

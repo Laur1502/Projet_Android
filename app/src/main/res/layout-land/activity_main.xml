@@ -10,11 +10,12 @@
 
     <TextView
         android:id="@+id/main_textview_greeting"
+        style="@style/TextViewStyle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:padding="8dp"
-        android:text="@string/welcome_name" />
+        android:text="@string/welcome_name1" />
 
     <EditText
         android:id="@+id/main_edittext_name"

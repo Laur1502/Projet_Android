@@ -1,76 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--layout = conteneur (as div)-->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".controller.MainActivity">
+    android:background="@drawable/drawable_gradient2">
 
     <TextView
         android:id="@+id/main_textview_greeting"
+        style="@style/TextViewStyle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:padding="8dp"
-        android:text="@string/welcome_name" />
+        android:text="@string/welcome_name1" />
 
-    <EditText
-        android:id="@+id/username"
+    <TextView
+        android:id="@+id/main_textview_greeting2"
+        style="@style/TextViewStyle1"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="60dp"
+        android:padding="8dp"
+        android:text="@string/welcome_name2" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="450dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/welcome_username" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/welcome_password" />
+        android:layout_gravity="center_vertical"
+        android:background="#FFF"
+        android:orientation="vertical"
+        tools:context=".controller.MainActivity">
 
 
-    <EditText
-        android:id="@+id/repassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/welcome_repassword" />
+        <EditText
+            android:id="@+id/username"
+            style="@style/EditTextStyle1"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/welcome_username" />
 
-    <Button
-        android:id="@+id/btnsignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
-        android:text="@string/welcome_signup"/>
-
-    <Button
-        android:id="@+id/btnsignin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
-        android:text="@string/welcome_signin"/>
-
-    <Button
-        android:id="@+id/sound_button_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="playSound"
-        android:text="@string/sound_play"/>
+        <EditText
+            android:id="@+id/password"
+            style="@style/EditTextStyle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textPassword"
+            android:hint="@string/welcome_password" />
 
 
+        <EditText
+            android:id="@+id/repassword"
+            style="@style/EditTextStyle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textPassword"
+            android:hint="@string/welcome_repassword" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnsignup"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="@string/welcome_signup" />
 
+        <Button
+            android:id="@+id/btnsignin"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="@string/welcome_signin" />
+
+        <Button
+            android:id="@+id/sound_button_play"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="playSound"
+            android:text="@string/sound_play" />
+
+
+    </LinearLayout>
+
+</FrameLayout>
 

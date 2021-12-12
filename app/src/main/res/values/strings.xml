@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Quizz</string>
-    <string name="welcome_name">Welcome! What\'s your name?</string>
+    <string name="welcome_name1">Welcome!</string>
+
+    <string name="welcome_name2">What\'s your name?</string>
 
     <string name="sound_play">Sound</string>
 
@@ -16,6 +18,9 @@
     <string name="normal_game_mode">Normal game mode</string>
     <string name="timer_game_mode">Timed game mode</string>
     <string name="scores_page">Table of scores</string>
+    <string name="well_done">Well done!</string>
+    <string name="your_score_is">Your score is</string>
+    <string name="home_score">HOME</string>
 
 
 </resources>
