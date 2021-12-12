@@ -3,6 +3,7 @@ package com.example.tpocr.controller;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
                     Boolean checkuserpass = databaseManager.checkUsernamepassword(user, pass);
                     if(checkuserpass == true){
                         Toast.makeText(LoginActivity.this, "Sign in successfull", Toast.LENGTH_SHORT).show();
+                        SharedPreferences userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
+                        SharedPreferences.Editor edit = userDetails.edit();
+                        edit.putString("username", user);
+                        edit.apply();
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                     }else{
