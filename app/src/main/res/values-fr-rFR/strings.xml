@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome_name">Bienvenue! Comment t’appelles-tu?</string>
+    <string name="sound_play">Son</string>
+
+    <string name="welcome_name1">Bienvenue!</string>
+    <string name="welcome_name2">Comment t’appelles-tu?</string>
     <string name="welcome_username">Entrer votre nom d\'utilisateur</string>
     <string name="welcome_password">Entrer votre mot de passe</string>
     <string name="welcome_repassword">Réentrer votre mot de passe</string>

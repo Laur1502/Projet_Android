@@ -58,6 +58,9 @@ public class HomeActivity extends AppCompatActivity {
         normalGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor edit = userDetails.edit();
+                edit.putInt("gamemode",0);
+                edit.apply();
                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                 intent.putExtra("UserName", namePlayer);
                 intent.putExtra("GameMode", "NormalMode");
@@ -68,6 +71,9 @@ public class HomeActivity extends AppCompatActivity {
         timedGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor edit = userDetails.edit();
+                edit.putInt("gamemode",1);
+                edit.apply();
                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                 intent.putExtra("UserName", namePlayer);
                 intent.putExtra("GameMode", "TimedMode");

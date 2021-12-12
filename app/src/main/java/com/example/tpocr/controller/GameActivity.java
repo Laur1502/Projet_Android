@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +31,8 @@ import java.lang.Object;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private TextToSpeech mTextToSpeech;
+
     private TextView mQuestionTextView;
     private TextView mTimerTextView;
     private Button mGameButton1;
@@ -35,9 +40,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mGameButton3;
     private Button mGameButton4;
     private Button mFakeSkipButton;
+    private String correctornot;
     QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
-    private int mRemainingQuestionCount=3;
+    private int questionNumber=9;
+    private int mRemainingQuestionCount=questionNumber;
     private int mScore;
     private String namePlayer;
     private String gameMode;
@@ -49,7 +56,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //public static final String BUNDLE_STATE_QUESTION_CURRENT = "BUNDLE_STATE_QUESTION_CURRENT";
     private DatabaseManager databaseManager;
 
-    public static final long COUNTDOWN_IN_MILLIS = 30000;
+    public static final long COUNTDOWN_IN_MILLIS = 10000;
     //private ColorStateList textColorDefaultCd; //changement couleur countdown
 
     private CountDownTimer countDownTimer;
@@ -57,6 +64,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private MediaPlayer mediaPlayer;
     private Button mSoundPlayButton;
+
+
+    int mGamemode;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -75,6 +85,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
+        mGamemode = userDetails.getInt("gamemode",0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
@@ -89,6 +102,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
         mQuestionTextView = findViewById(R.id.game_activity_textview_question);
         mTimerTextView = findViewById(R.id.game_activity_textview_cd);
+        if(mGamemode==1) mTimerTextView.setVisibility(View.VISIBLE);
+        else mTimerTextView.setVisibility(View.INVISIBLE);
         mGameButton1 = findViewById(R.id.game_activity_button_1);
         mGameButton2 = findViewById(R.id.game_activity_button_2);
         mGameButton3 = findViewById(R.id.game_activity_button_3);
@@ -119,6 +134,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+
         //textColorDefaultCd = mTimerTextView.getTextColors();
 
         mEnableTouchEvents = true;
@@ -136,12 +153,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             //Log.d("FAIL", savedInstanceState.toString());
             mScore = 0;
-            mRemainingQuestionCount = 3;
+            mRemainingQuestionCount = questionNumber;
             mQuestionBank = generateQuestion();
 
         }
 
-        mQuestionBank.setCurrentIndex(3 - mRemainingQuestionCount);
+        mQuestionBank.setCurrentIndex(questionNumber - mRemainingQuestionCount);
         mCurrentQuestion = mQuestionBank.getCurrentQuestion();
         Log.d("int"," " + mQuestionBank.getCurrentIndex());
         displayQuestion(mCurrentQuestion);
@@ -160,7 +177,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Paul Smith"
                 ),
                 0,
-                "test");
+                "https://en.wikipedia.org/wiki/Andy_Rubin");
 
         Question question2 = new Question(
                 "When did the first man land on the moon?",
@@ -171,7 +188,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "1969"
                 ),
                 3,
-                "wikiLink");
+                "https://en.wikipedia.org/wiki/Apollo_11");
 
         Question question3 = new Question(
                 "What is the house number of The Simpsons?",
@@ -182,20 +199,115 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "742"
                 ),
                 3,
-                "wikiLink");
+                "https://en.wikipedia.org/wiki/The_Simpsons_house");
+
+        Question question4 = new Question(
+                "Which country won the 2014 football world cup in 2014?",
+                Arrays.asList(
+                        "Brazil",
+                        "Argentina",
+                        "Germany",
+                        "Italy"
+                ),
+                2,
+                "https://en.wikipedia.org/wiki/2014_FIFA_World_Cup");
+
+        Question question5 = new Question(
+                "Who was the king of gods in Greek mythology?",
+                Arrays.asList(
+                        "Apollon",
+                        "Zeus",
+                        "Athena",
+                        "Hermès"
+                ),
+                1,
+                "https://en.wikipedia.org/wiki/Zeus");
+
+        Question question6 = new Question(
+                "What is the capital of Australia?",
+                Arrays.asList(
+                        "Sydney",
+                        "New York",
+                        "Canberra",
+                        "Melbourne"
+                ),
+                3,
+                "https://en.wikipedia.org/wiki/Australia");
+
+        Question question7 = new Question(
+                "What is the longest river in the world?",
+                Arrays.asList(
+                        "the Amazon",
+                        "the Nil",
+                        "the Mississippi",
+                        "the Congo"
+                ),
+                0,
+                "https://en.wikipedia.org/wiki/List_of_rivers_by_length");
+
+        Question question8 = new Question(
+                "Who wrote Les Miserables ?",
+                Arrays.asList(
+                        "William Shakespeare",
+                        "Victor Hugo",
+                        "Albert Camus",
+                        "Charles Dickens"
+                ),
+                1,
+                "https://en.wikipedia.org/wiki/Les_Mis%C3%A9rables");
+
+        Question question9 = new Question(
+                "What are the three primary colors ?",
+                Arrays.asList(
+                        "Blue Red White",
+                        "Red Yellow Purple",
+                        "Blue Red Yellow",
+                        "Yellow Pink Green"
+                ),
+                3,
+                "https://en.wikipedia.org/wiki/Primary_color");
+
+        Question question10 = new Question(
+                "In computing what is RAM short for ?",
+                Arrays.asList(
+                        "Random Access Memory",
+                        "Real Audio Movie",
+                        "Royal Air Maroc",
+                        "Removing A Mistake"
+                ),
+                0,
+                "https://en.wikipedia.org/wiki/Random-access_memory");
 
 
-        return new QuestionBank(Arrays.asList(question1, question2, question3));
+        return new QuestionBank(Arrays.asList(question1, question2, question3, question5,question6, question7, question8, question9, question10));
 
     }
 
     private void displayQuestion(final Question question) {
-// Set the text for the question text view and the four buttons
-        mQuestionTextView.setText(question.getQuestion());
-        mGameButton1.setText(question.getChoiceList().get(0));
-        mGameButton2.setText(question.getChoiceList().get(1));
-        mGameButton3.setText(question.getChoiceList().get(2));
-        mGameButton4.setText(question.getChoiceList().get(3));
+
+// Set the text for the question text view and the four
+        String q=question.getQuestion();
+        mQuestionTextView.setText(q);
+        String a1=question.getChoiceList().get(0);
+        mGameButton1.setText(a1);
+        String a2=question.getChoiceList().get(1);
+        mGameButton2.setText(a2);
+        String a3=question.getChoiceList().get(2);
+        mGameButton3.setText(a3);
+        String a4=question.getChoiceList().get(3);
+        mGameButton4.setText(a4);
+        String toSpeak = q + " "+ a1 + " "+ a2 + " "+ a3 + " "+ a4;
+        mTextToSpeech=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS) {
+                    Log.e("TTS","TTS");
+                    mTextToSpeech.setLanguage(Locale.US);
+                    mTextToSpeech.stop();
+                    mTextToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                }
+            }
+        });
 
 
     }
@@ -221,47 +333,91 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         // Bonne réponse / mauvaise
         if (index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
-            Toast.makeText(this, "Correct !", Toast.LENGTH_SHORT).show();
+            correctornot="Correct !";
             mScore++;
         } else {
-            Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+            correctornot="Incorrect !";
         }
 
         //désactive les boutons
         mEnableTouchEvents = false;
         countDownTimer.cancel();
 
-        new Handler().postDelayed(new Runnable() {
+        if(mGamemode==1) {
+            Toast.makeText(this, correctornot, Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
 
-            @Override
-            public void run() {
-                // If this is the last question, ends the game.
-                // Else, display the next question.
+                @Override
+                public void run() {
+                    // If this is the last question, ends the game.
+                    // Else, display the next question.
 
-                // passer à la question suivante / fin de partie
-                mRemainingQuestionCount--;
+                    // passer à la question suivante / fin de partie
+                    mRemainingQuestionCount--;
 
-                if (mRemainingQuestionCount > 0) {
-                    mCurrentQuestion = mQuestionBank.getNextQuestion();
-                    displayQuestion(mCurrentQuestion);
+                    if (mRemainingQuestionCount > 0) {
+                        mCurrentQuestion = mQuestionBank.getNextQuestion();
+                        displayQuestion(mCurrentQuestion);
 
-                    timeLeftInMillis = COUNTDOWN_IN_MILLIS;
-                    startCountDown();
+                        timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+                        startCountDown();
 
-                } else {
-                    databaseManager.insertGame(namePlayer, gameMode, mScore);
-                    databaseManager.close();
-                    endGame();
+                    } else {
+                        databaseManager.insertGame(namePlayer, gameMode, mScore);
+                        databaseManager.close();
+                        endGame();
+                    }
+                    // on réactive les boutons après le timer
+                    mEnableTouchEvents = true;
+
                 }
-                // on réactive les boutons après le timer
-                mEnableTouchEvents = true;
-            }
-        }, 2_000); // LENGTH_SHORT is usually 2 second long
+                }, 1_000); // LENGTH_SHORT is usually 2 second long*/
+        }
+        else createAlterDialog(mQuestionBank.getCurrentQuestion());
 
+    }
 
+    private void createAlterDialog(Question q){
+        AlertDialog.Builder alertDialog1  = new AlertDialog.Builder(this);
+        String str = "You are " + correctornot + " ! \n"  ;
+        alertDialog1.setTitle(str)
+                .setMessage("Do you want to know more about this question ? ")
+                .setIcon(R.mipmap.ic_launcher)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String l = q.getWikiLink();
+                        Uri uri= Uri.parse(l);
+                        Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+                        startActivity(intent);
+                        showNextQuestion();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showNextQuestion();
+                    }
+                })
+                .create()
+                .show();
+    }
 
+    public void showNextQuestion(){
+        mRemainingQuestionCount--;
 
+        if (mRemainingQuestionCount > 0) {
+            mCurrentQuestion = mQuestionBank.getNextQuestion();
+            displayQuestion(mCurrentQuestion);
 
+            timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+            startCountDown();
+
+        } else {
+            endGame();
+        }
+        // on réactive les boutons après le timer
+        mEnableTouchEvents = true;
     }
 
     public void updateCountDownText(){
@@ -286,7 +442,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFinish() {
                 timeLeftInMillis =0;
-                onClick(mFakeSkipButton);
+                if(mGamemode==1) onClick(mFakeSkipButton);
                 updateCountDownText();
 
             }
@@ -315,6 +471,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         if(countDownTimer != null){
             countDownTimer.cancel();
+        }
+        if(mTextToSpeech!=null){
+            mTextToSpeech.stop();
+            mTextToSpeech.shutdown();
         }
     }
 
