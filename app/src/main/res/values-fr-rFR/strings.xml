@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="sound_play">Son</string>
+
     <string name="welcome_name">Bienvenue! Comment t’appelles-tu?</string>
     <string name="welcome_username">Entrer votre nom d\'utilisateur</string>
     <string name="welcome_password">Entrer votre mot de passe</string>
