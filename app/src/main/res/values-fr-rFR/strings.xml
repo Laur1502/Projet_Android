@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_name">Bienvenue! Comment t’appelles-tu?</string>
-    <string name="welcome_editText_hint">Veuillez taper votre nom</string>
-    <string name="welcome_play_button">Commençons le jeu!</string>
+    <string name="welcome_username">Entrer votre nom d\'utilisateur</string>
+    <string name="welcome_password">Entrer votre mot de passe</string>
+    <string name="welcome_repassword">Réentrer votre mot de passe</string>
+    <string name="welcome_signup">S\'inscrire</string>
+    <string name="welcome_signin">Se connecter</string>
+
+    <string name="home_welcome">Bienvenue</string>
+    <string name="home_choice">Que veux tu choisir?</string>
+
+    <string name="normal_game_mode">Mode de jeu normale</string>
+    <string name="timer_game_mode">Mode de Jeu à Timer</string>
+    <string name="scores_page">Scoreboard</string>
 </resources>
