@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         mNameEditText = findViewById(R.id.main_edittext_name);
         mPlayButton = findViewById(R.id.main_button_play);
 
-        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
+        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound);
         mSoundPlayButton = findViewById(R.id.sound_button_play);
 
         mSoundPlayButton.setOnClickListener(new View.OnClickListener() {

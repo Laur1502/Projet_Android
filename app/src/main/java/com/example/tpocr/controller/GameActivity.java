@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Locale;
+import java.lang.Object;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -90,7 +91,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mGameButton3.setOnClickListener(this);
         mGameButton4.setOnClickListener(this);
 
-        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
+        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound);
         mSoundPlayButton = findViewById(R.id.sound_button_play);
 
         mSoundPlayButton.setOnClickListener(new View.OnClickListener() {
@@ -99,13 +100,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if(mediaPlayer.isPlaying())
                 {
                     pauseSound();
-                    //mSoundPlayButton.setBackgroundResource(R.drawable.play);
+                    mSoundPlayButton.setBackgroundResource(android.R.drawable.ic_media_play);
                 }
 
                 else
                 {
                     playSound();
-                    //mSoundPlayButton.setBackgroundResource(R.drawable.pause);
+                    mSoundPlayButton.setBackgroundResource(android.R.drawable.ic_media_pause);
                 }
             }
         });
