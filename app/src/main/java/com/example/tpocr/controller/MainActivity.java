@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int GAME_ACTIVITY_REQUEST_CODE = 42;
     private DatabaseManager databaseManager;
+    private MediaPlayer mediaPlayer;
+    private Button mSoundPlayButton;
 
 
     //Récupère le score de gameActivity
@@ -47,6 +50,28 @@ public class MainActivity extends AppCompatActivity {
         repassword = (EditText) findViewById(R.id.repassword);
         signup = (Button) findViewById(R.id.btnsignup);
         signin = (Button) findViewById(R.id.btnsignin);
+
+        this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound);
+        mSoundPlayButton = findViewById(R.id.sound_button_play);
+
+        mSoundPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mediaPlayer.isPlaying())
+                {
+                    pauseSound();
+                    //mSoundPlayButton.setBackgroundResource(R.drawable.play);
+                }
+
+                else
+                {
+                    playSound();
+                    //mSoundPlayButton.setBackgroundResource(R.drawable.pause);
+                }
+            }
+        });
+
+       
         databaseManager = new DatabaseManager(this);
 
         databaseManager.close();
@@ -114,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
+
             }
         });
 
@@ -127,6 +153,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void playSound() {
+
+        mediaPlayer.start();
+
+    }
+
+    public void pauseSound() {
+
+        mediaPlayer.stop();
 
     }
 }

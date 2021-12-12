@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name" translatable="false">Quizz</string>
     <string name="welcome_name">Welcome! What\'s your name?</string>
+
+    <string name="sound_play">Sound</string>
+
     <string name="welcome_username">Type your name</string>
     <string name="welcome_password">Type your password</string>
     <string name="welcome_repassword">Retype your password</string>
