@@ -3,25 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/laur1/AndroidStudioProjects/TPOCR/app/src/main/res/layout-land/activity_game.xml" value="0.2239858906525573" />
-        <entry key="..\:/Users/laur1/AndroidStudioProjects/TPOCR/app/src/main/res/layout-land/activity_main.xml" value="0.2239858906525573" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/drawable/drawable_gradient2.xml" value="0.21875" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/drawable/rounded_button.xml" value="0.21875" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/layout-land/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/layout/activity_game.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/layout/activity_home.xml" value="0.176" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/layout/activity_login.xml" value="0.4" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/diye1/Documents/GitHub/Projet_Android/app/src/main/res/layout/activity_score.xml" value="0.2" />
         <entry key="..\:/Users/laur1/AndroidStudioProjects/TPOCR/app/src/main/res/layout/activity_game.xml" value="0.264" />
-        <entry key="..\:/Users/laur1/AndroidStudioProjects/TPOCR/app/src/main/res/layout/activity_home.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/laur1/AndroidStudioProjects/TPOCR/app/src/main/res/layout/activity_login.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/laur1/AndroidStudioProjects/TPOCR/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.5755208333333334" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/drawable/drawable_gradient.xml" value="0.3388888888888889" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/drawable/drawable_gradient2.xml" value="0.23385416666666667" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.5755208333333334" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/drawable/rounded.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/laur1/AndroidStudioProjects/TPOCR/app/src/main/res/layout/activity_main.xml" value="0.4041666666666667" />
         <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/layout-land/activity_game.xml" value="0.31128747795414463" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/layout-land/activity_login.xml" value="0.18430335097001763" />
         <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/layout-land/activity_main.xml" value="0.31128747795414463" />
         <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/layout/activity_game.xml" value="0.2907608695652174" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/layout/activity_home.xml" value="0.43523550724637683" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/layout/activity_login.xml" value="0.47282608695652173" />
         <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/layout/activity_main.xml" value="0.2907608695652174" />
-        <entry key="..\:/Users/seven/source/repos/Projet_Android/app/src/main/res/layout/activity_score.xml" value="0.559375" />
       </map>
     </option>
   </component>
