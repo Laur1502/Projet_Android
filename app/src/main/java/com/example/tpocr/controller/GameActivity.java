@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -36,6 +37,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mGameButton3;
     private Button mGameButton4;
     private Button mFakeSkipButton;
+    private String correctornot;
     QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
     private int questionNumber=9;
@@ -159,7 +161,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Paul Smith"
                 ),
                 0,
-                "test");
+                "https://en.wikipedia.org/wiki/Andy_Rubin");
 
         Question question2 = new Question(
                 "When did the first man land on the moon?",
@@ -170,7 +172,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "1969"
                 ),
                 3,
-                "wikiLink");
+                "https://en.wikipedia.org/wiki/Apollo_11");
 
         Question question3 = new Question(
                 "What is the house number of The Simpsons?",
@@ -181,7 +183,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "742"
                 ),
                 3,
-                "wikiLink");
+                "https://en.wikipedia.org/wiki/The_Simpsons_house");
 
         Question question4 = new Question(
                 "Which country won the 2014 football world cup in 2014?",
@@ -297,45 +299,88 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         // Bonne réponse / mauvaise
         if (index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
-            Toast.makeText(this, "Correct !", Toast.LENGTH_SHORT).show();
+            correctornot="Correct !";
             mScore++;
         } else {
-            Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+            correctornot="Incorrect !";
         }
 
         //désactive les boutons
         mEnableTouchEvents = false;
         countDownTimer.cancel();
 
-        new Handler().postDelayed(new Runnable() {
+        if(mGamemode==1) {
+            Toast.makeText(this, correctornot, Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
 
-            @Override
-            public void run() {
-                // If this is the last question, ends the game.
-                // Else, display the next question.
+                @Override
+                public void run() {
+                    // If this is the last question, ends the game.
+                    // Else, display the next question.
 
-                // passer à la question suivante / fin de partie
-                mRemainingQuestionCount--;
+                    // passer à la question suivante / fin de partie
+                    mRemainingQuestionCount--;
 
-                if (mRemainingQuestionCount > 0) {
-                    mCurrentQuestion = mQuestionBank.getNextQuestion();
-                    displayQuestion(mCurrentQuestion);
+                    if (mRemainingQuestionCount > 0) {
+                        mCurrentQuestion = mQuestionBank.getNextQuestion();
+                        displayQuestion(mCurrentQuestion);
 
-                    timeLeftInMillis = COUNTDOWN_IN_MILLIS;
-                    startCountDown();
+                        timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+                        startCountDown();
 
-                } else {
-                    endGame();
+                    } else {
+                        endGame();
+                    }
+                    // on réactive les boutons après le timer
+                    mEnableTouchEvents = true;
                 }
-                // on réactive les boutons après le timer
-                mEnableTouchEvents = true;
-            }
-        }, 2_000); // LENGTH_SHORT is usually 2 second long
+                }, 1_000); // LENGTH_SHORT is usually 2 second long*/
+        }
+        else createAlterDialog(mQuestionBank.getCurrentQuestion());
 
+    }
 
+    private void createAlterDialog(Question q){
+        AlertDialog.Builder alertDialog1  = new AlertDialog.Builder(this);
+        String str = "You are " + correctornot + " ! \n"  ;
+        alertDialog1.setTitle(str)
+                .setMessage("Do you want to know more about this question ? ")
+                .setIcon(R.mipmap.ic_launcher)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String l = q.getWikiLink();
+                        Uri uri= Uri.parse(l);
+                        Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+                        startActivity(intent);
+                        showNextQuestion();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showNextQuestion();
+                    }
+                })
+                .create()
+                .show();
+    }
 
+    public void showNextQuestion(){
+        mRemainingQuestionCount--;
 
+        if (mRemainingQuestionCount > 0) {
+            mCurrentQuestion = mQuestionBank.getNextQuestion();
+            displayQuestion(mCurrentQuestion);
 
+            timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+            startCountDown();
+
+        } else {
+            endGame();
+        }
+        // on réactive les boutons après le timer
+        mEnableTouchEvents = true;
     }
 
     public void updateCountDownText(){
