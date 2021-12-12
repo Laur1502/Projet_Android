@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TPOCR">
         <activity
+            android:name=".controller.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".controller.GameActivity"
             android:exported="false" />
         <activity

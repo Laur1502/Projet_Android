@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name" translatable="false">Quizz</string>
     <string name="welcome_name">Welcome! What\'s your name?</string>
-    <string name="welcome_editText_hint">Please type your name</string>
-    <string name="welcome_play_button">Let\'s Play</string>
+
+    <string name="sound_play">Sound</string>
+
+    <string name="welcome_username">Type your name</string>
+    <string name="welcome_password">Type your password</string>
+    <string name="welcome_repassword">Retype your password</string>
+    <string name="welcome_signup">Register</string>
+    <string name="welcome_signin">Sign in</string>
+
+    <string name="home_welcome">Welcome</string>
+    <string name="home_choice">What do you want to do ?</string>
+
+    <string name="normal_game_mode">Normal game mode</string>
+    <string name="timer_game_mode">Timed game mode</string>
+    <string name="scores_page">Table of scores</string>
+
 
 </resources>
