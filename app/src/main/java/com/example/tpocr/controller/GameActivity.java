@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -55,6 +56,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private MediaPlayer mediaPlayer;
     private Button mSoundPlayButton;
 
+
+    int mGamemode;
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return mEnableTouchEvents && super.dispatchTouchEvent(ev);
@@ -72,12 +76,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
+        mGamemode = userDetails.getInt("gamemode",0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
         mQuestionTextView = findViewById(R.id.game_activity_textview_question);
         mTimerTextView = findViewById(R.id.game_activity_textview_cd);
+        if(mGamemode==1) mTimerTextView.setVisibility(View.VISIBLE);
+        else mTimerTextView.setVisibility(View.INVISIBLE);
         mGameButton1 = findViewById(R.id.game_activity_button_1);
         mGameButton2 = findViewById(R.id.game_activity_button_2);
         mGameButton3 = findViewById(R.id.game_activity_button_3);
@@ -350,7 +359,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFinish() {
                 timeLeftInMillis =0;
-                onClick(mFakeSkipButton);
+                if(mGamemode==1) onClick(mFakeSkipButton);
                 updateCountDownText();
 
             }

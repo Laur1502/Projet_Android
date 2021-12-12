@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -124,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
                         if(checkuser == false){
                             Boolean insert = databaseManager.insertPlayer(user, pass);
                             if(insert == true){
+                                SharedPreferences userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
+                                SharedPreferences.Editor edit = userDetails.edit();
+                                edit.putString("username", user);
+                                edit.apply();
                                 Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(intent);
