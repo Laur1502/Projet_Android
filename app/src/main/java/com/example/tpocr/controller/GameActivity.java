@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mFakeSkipButton;
     QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
-    private int mRemainingQuestionCount=3;
+    private int mRemainingQuestionCount=10;
     private int mScore;
     public static final String BUNDLE_EXTRA_SCORE = "BUNDLE_EXTRA_SCORE";
     private boolean mEnableTouchEvents;
@@ -46,7 +46,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BUNDLE_QUESTION_BANK = "BUNDLE_QUESTION_BANK";
     //public static final String BUNDLE_STATE_QUESTION_CURRENT = "BUNDLE_STATE_QUESTION_CURRENT";
 
-    public static final long COUNTDOWN_IN_MILLIS = 30000;
+    public static final long COUNTDOWN_IN_MILLIS = 10000;
     //private ColorStateList textColorDefaultCd; //changement couleur countdown
 
     private CountDownTimer countDownTimer;
@@ -125,12 +125,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             //Log.d("FAIL", savedInstanceState.toString());
             mScore = 0;
-            mRemainingQuestionCount = 3;
+            mRemainingQuestionCount = 10;
             mQuestionBank = generateQuestion();
 
         }
 
-        mQuestionBank.setCurrentIndex(3 - mRemainingQuestionCount);
+        mQuestionBank.setCurrentIndex(10 - mRemainingQuestionCount);
         mCurrentQuestion = mQuestionBank.getCurrentQuestion();
         Log.d("int"," " + mQuestionBank.getCurrentIndex());
         displayQuestion(mCurrentQuestion);
@@ -173,8 +173,85 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 3,
                 "wikiLink");
 
+        Question question4 = new Question(
+                "Which country won the 2014 football world cup in 2014?",
+                Arrays.asList(
+                        "Brazil",
+                        "Argentina",
+                        "Germany",
+                        "Italy"
+                ),
+                2,
+                "https://fr.wikipedia.org/wiki/Coupe_du_monde_de_football_2014");
 
-        return new QuestionBank(Arrays.asList(question1, question2, question3));
+        Question question5 = new Question(
+                "Who was the king of gods in Greek mythology?",
+                Arrays.asList(
+                        "Apollon",
+                        "Zeus",
+                        "Athena",
+                        "Hermès"
+                ),
+                1,
+                "https://fr.wikipedia.org/wiki/Zeus");
+
+        Question question6 = new Question(
+                "What is the capital of Australia?",
+                Arrays.asList(
+                        "Sydney",
+                        "New York",
+                        "Canberra",
+                        "Melbourne"
+                ),
+                3,
+                "https://fr.wikipedia.org/wiki/Australie");
+
+        Question question7 = new Question(
+                "What is the longest river in the world?",
+                Arrays.asList(
+                        "the Amazon",
+                        "the Nil",
+                        "the Mississippi",
+                        "the Congo"
+                ),
+                0,
+                "https://fr.wikipedia.org/wiki/Liste_des_plus_longs_cours_d%27eau");
+
+        Question question8 = new Question(
+                "Who wrote Les Miserables ?",
+                Arrays.asList(
+                        "William Shakespeare",
+                        "Victor Hugo",
+                        "Albert Camus",
+                        "Charles Dickens"
+                ),
+                1,
+                "https://fr.wikipedia.org/wiki/Les_Mis%C3%A9rables");
+
+        Question question9 = new Question(
+                "What are the three primary colors ?",
+                Arrays.asList(
+                        "Blue Red White",
+                        "Red Yellow Purple",
+                        "Blue Red Yellow",
+                        "Yellow Pink Green"
+                ),
+                3,
+                "https://fr.wikipedia.org/wiki/Couleur_primaire");
+
+        Question question10 = new Question(
+                "In computing what is RAM short for ?",
+                Arrays.asList(
+                        "Random Access Memory",
+                        "Real Audio Movie",
+                        "Royal Air Maroc",
+                        "Removing A Mistake"
+                ),
+                0,
+                "https://fr.wikipedia.org/wiki/M%C3%A9moire_vive");
+
+
+        return new QuestionBank(Arrays.asList(question1, question2, question3, question5,question6, question7, question8, question9, question10));
 
     }
 
