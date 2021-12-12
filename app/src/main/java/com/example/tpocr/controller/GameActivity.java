@@ -38,7 +38,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mFakeSkipButton;
     QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
-    private int mRemainingQuestionCount=10;
+    private int questionNumber=9;
+    private int mRemainingQuestionCount=questionNumber;
     private int mScore;
     public static final String BUNDLE_EXTRA_SCORE = "BUNDLE_EXTRA_SCORE";
     private boolean mEnableTouchEvents;
@@ -134,12 +135,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             //Log.d("FAIL", savedInstanceState.toString());
             mScore = 0;
-            mRemainingQuestionCount = 10;
+            mRemainingQuestionCount = questionNumber;
             mQuestionBank = generateQuestion();
 
         }
 
-        mQuestionBank.setCurrentIndex(10 - mRemainingQuestionCount);
+        mQuestionBank.setCurrentIndex(questionNumber - mRemainingQuestionCount);
         mCurrentQuestion = mQuestionBank.getCurrentQuestion();
         Log.d("int"," " + mQuestionBank.getCurrentIndex());
         displayQuestion(mCurrentQuestion);
