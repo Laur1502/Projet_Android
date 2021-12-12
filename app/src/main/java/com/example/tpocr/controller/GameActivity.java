@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +30,8 @@ import java.util.Locale;
 import java.lang.Object;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private TextToSpeech mTextToSpeech;
 
     private TextView mQuestionTextView;
     private TextView mTimerTextView;
@@ -120,6 +123,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+
         //textColorDefaultCd = mTimerTextView.getTextColors();
 
         mEnableTouchEvents = true;
@@ -194,7 +199,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Italy"
                 ),
                 2,
-                "https://fr.wikipedia.org/wiki/Coupe_du_monde_de_football_2014");
+                "https://en.wikipedia.org/wiki/2014_FIFA_World_Cup");
 
         Question question5 = new Question(
                 "Who was the king of gods in Greek mythology?",
@@ -205,7 +210,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Hermès"
                 ),
                 1,
-                "https://fr.wikipedia.org/wiki/Zeus");
+                "https://en.wikipedia.org/wiki/Zeus");
 
         Question question6 = new Question(
                 "What is the capital of Australia?",
@@ -216,7 +221,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Melbourne"
                 ),
                 3,
-                "https://fr.wikipedia.org/wiki/Australie");
+                "https://en.wikipedia.org/wiki/Australia");
 
         Question question7 = new Question(
                 "What is the longest river in the world?",
@@ -227,7 +232,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "the Congo"
                 ),
                 0,
-                "https://fr.wikipedia.org/wiki/Liste_des_plus_longs_cours_d%27eau");
+                "https://en.wikipedia.org/wiki/List_of_rivers_by_length");
 
         Question question8 = new Question(
                 "Who wrote Les Miserables ?",
@@ -238,7 +243,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Charles Dickens"
                 ),
                 1,
-                "https://fr.wikipedia.org/wiki/Les_Mis%C3%A9rables");
+                "https://en.wikipedia.org/wiki/Les_Mis%C3%A9rables");
 
         Question question9 = new Question(
                 "What are the three primary colors ?",
@@ -249,7 +254,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Yellow Pink Green"
                 ),
                 3,
-                "https://fr.wikipedia.org/wiki/Couleur_primaire");
+                "https://en.wikipedia.org/wiki/Primary_color");
 
         Question question10 = new Question(
                 "In computing what is RAM short for ?",
@@ -260,7 +265,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         "Removing A Mistake"
                 ),
                 0,
-                "https://fr.wikipedia.org/wiki/M%C3%A9moire_vive");
+                "https://en.wikipedia.org/wiki/Random-access_memory");
 
 
         return new QuestionBank(Arrays.asList(question1, question2, question3, question5,question6, question7, question8, question9, question10));
@@ -268,12 +273,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void displayQuestion(final Question question) {
-// Set the text for the question text view and the four buttons
-        mQuestionTextView.setText(question.getQuestion());
-        mGameButton1.setText(question.getChoiceList().get(0));
-        mGameButton2.setText(question.getChoiceList().get(1));
-        mGameButton3.setText(question.getChoiceList().get(2));
-        mGameButton4.setText(question.getChoiceList().get(3));
+
+// Set the text for the question text view and the four
+        String q=question.getQuestion();
+        mQuestionTextView.setText(q);
+        String a1=question.getChoiceList().get(0);
+        mGameButton1.setText(a1);
+        String a2=question.getChoiceList().get(1);
+        mGameButton2.setText(a2);
+        String a3=question.getChoiceList().get(2);
+        mGameButton3.setText(a3);
+        String a4=question.getChoiceList().get(3);
+        mGameButton4.setText(a4);
+        String toSpeak = q + " "+ a1 + " "+ a2 + " "+ a3 + " "+ a4;
+        mTextToSpeech=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS) {
+                    Log.e("TTS","TTS");
+                    mTextToSpeech.setLanguage(Locale.US);
+                    mTextToSpeech.stop();
+                    mTextToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                }
+            }
+        });
 
 
     }
@@ -434,6 +457,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         if(countDownTimer != null){
             countDownTimer.cancel();
+        }
+        if(mTextToSpeech!=null){
+            mTextToSpeech.stop();
+            mTextToSpeech.shutdown();
         }
     }
 
