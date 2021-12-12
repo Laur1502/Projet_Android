@@ -42,6 +42,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
             + " answerIndex int NOT NULL,"
             + " wikiLink text)";
 
+    private static final String CREATE_TABLE_GAME = "CREATE TABLE Game ("
+            + "idGame integer PRIMARY KEY autoincrement,"
+            + "namePlayer text NOT NULL,"
+            + "modeJeu text NOT NULL,"
+            + "score int NOT NULL,"
+            + "dateJeu datetime default current_timestamp)";
+
 
 
     @Override
@@ -50,6 +57,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         //Exécute les create table
         db.execSQL(CREATE_TABLE_PLAYER);
         db.execSQL(CREATE_TABLE_QUESTIONBANK);
+        db.execSQL(CREATE_TABLE_GAME);
 
         // Ajoute les questions en BDD
         fillQuestionsTable(db);
@@ -110,6 +118,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
         else{
             return false;
         }
+    }
+
+    // ----------------------------------------------------------------------- PARTIE GAME ----------------------------------------------------------------------------
+
+    public void insertGame(String namePlayer, String modeJeu, int score){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("namePlayer", namePlayer);
+        contentValues.put("modeJeu", modeJeu);
+        contentValues.put("score", score);
+        db.insert("Game", null, contentValues);
+
     }
 
     // ----------------------------------------------------------------------- PARTIE QUESTION BANK ----------------------------------------------------------------------------

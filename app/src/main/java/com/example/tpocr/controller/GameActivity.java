@@ -46,12 +46,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int questionNumber=9;
     private int mRemainingQuestionCount=questionNumber;
     private int mScore;
+    private String namePlayer;
+    private String gameMode;
     public static final String BUNDLE_EXTRA_SCORE = "BUNDLE_EXTRA_SCORE";
     private boolean mEnableTouchEvents;
     public static final String BUNDLE_STATE_SCORE = "BUNDLE_STATE_SCORE";
     public static final String BUNDLE_STATE_QUESTION = "BUNDLE_STATE_QUESTION";
     public static final String BUNDLE_QUESTION_BANK = "BUNDLE_QUESTION_BANK";
     //public static final String BUNDLE_STATE_QUESTION_CURRENT = "BUNDLE_STATE_QUESTION_CURRENT";
+    private DatabaseManager databaseManager;
 
     public static final long COUNTDOWN_IN_MILLIS = 10000;
     //private ColorStateList textColorDefaultCd; //changement couleur countdown
@@ -87,6 +90,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        databaseManager = new DatabaseManager(this);
+
+        // On récupère le nom du joueur et le mode de jeu
+        Intent intent = getIntent();
+        namePlayer = intent.getStringExtra("UserName");
+        gameMode = intent.getStringExtra("GameMode");
+
 
         this.mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.sound_android);
         mQuestionTextView = findViewById(R.id.game_activity_textview_question);
@@ -352,10 +363,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         startCountDown();
 
                     } else {
+                        databaseManager.insertGame(namePlayer, gameMode, mScore);
+                        databaseManager.close();
                         endGame();
                     }
                     // on réactive les boutons après le timer
                     mEnableTouchEvents = true;
+
                 }
                 }, 1_000); // LENGTH_SHORT is usually 2 second long*/
         }
