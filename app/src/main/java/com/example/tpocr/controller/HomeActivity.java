@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         timedGameBtn = (Button) findViewById(R.id.timer_mode);
         scoreBtn = (Button) findViewById(R.id.scores);
         greetingTV = findViewById(R.id.home_textview_greeting);
-        greetingTV.setText(greetingTV.getText() + username);
+        greetingTV.setText(greetingTV.getText() + " "+ username);
         normalGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
