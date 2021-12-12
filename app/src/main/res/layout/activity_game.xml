@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white">
     android:padding="8dp">
 
 
@@ -15,6 +16,7 @@
         android:layout_margin="8dp"
         android:layout_weight="3"
         android:background="@drawable/drawable_gradient2"
+        android:fontFamily="@font/petit_formal_script"
         android:gravity="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -23,61 +25,37 @@
 
     <Button
         android:id="@+id/game_activity_button_1"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
-        android:padding="16dp"
-        android:textSize="18sp"
+        style="@style/ButtonStyle2"
         tools:text="Answer1" />
 
     <Button
         android:id="@+id/game_activity_button_2"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
-        android:padding="16dp"
-        android:textSize="18sp"
+        style="@style/ButtonStyle2"
         tools:text="Answer2" />
 
     <Button
         android:id="@+id/game_activity_button_3"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
-        android:padding="16dp"
-        android:textSize="18sp"
+        style="@style/ButtonStyle2"
         tools:text="Answer3" />
 
     <Button
         android:id="@+id/game_activity_button_4"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
-        android:padding="16dp"
-        android:textSize="18sp"
+        style="@style/ButtonStyle2"
         tools:text="Answer4" />
 
     <TextView
         android:id="@+id/game_activity_textview_cd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewStyle1"
         android:layout_gravity="end"
-        android:background="@color/purple_200"
-        android:textColor="#5E35B1"
+        android:background="@drawable/drawable_gradient2"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         tools:text="3:00" />
 
     <Button
         android:id="@+id/sound_button_play"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
