@@ -6,11 +6,17 @@ public class Question {
     private final String mQuestion;
     private final List<String> mChoiceList;
     private final int mAnswerIndex;
+    private final String mWikiLink;
 
-    public Question(String question, List<String> choiceList, int answerIndex) {
+    public Question(String question, List<String> choiceList, int answerIndex, String wikiLink) {
         mQuestion = question;
         mChoiceList = choiceList;
         mAnswerIndex = answerIndex;
+        mWikiLink = wikiLink;
+    }
+
+    public String getWikiLink() {
+        return mWikiLink;
     }
 
     public String getQuestion() {
