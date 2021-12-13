@@ -414,6 +414,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             startCountDown();
 
         } else {
+            databaseManager.insertGame(namePlayer, gameMode, mScore);
+            databaseManager.close();
             endGame();
         }
         // on réactive les boutons après le timer
