@@ -50,13 +50,11 @@ public class MainActivity extends AppCompatActivity {
                 if(mediaPlayer.isPlaying())
                 {
                     pauseSound();
-                    //mSoundPlayButton.setBackgroundResource(R.drawable.play);
                 }
 
                 else
                 {
                     playSound();
-                    //mSoundPlayButton.setBackgroundResource(R.drawable.pause);
                 }
             }
         });
@@ -79,24 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                mPlayButton.setEnabled(!s.toString().isEmpty());
             }
         });
-
-//        mPlayButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//
-////                databaseManager.insertPlayer(username.getText().toString());
-////                databaseManager.close();
-//
-//
-//                Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-//                startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
-//
-//
-//            }
-//        });
 
         signup.setOnClickListener(new View.OnClickListener(){
             @Override

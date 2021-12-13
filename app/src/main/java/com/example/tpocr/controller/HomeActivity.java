@@ -24,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     private String namePlayer;
     private static final int GAME_ACTIVITY_REQUEST_CODE = 42;
 
-    //Récupère le score de gameActivity
+    //get Activity Score
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // On récupère le nom du joueur
+        // get User Name
         Intent intent = getIntent();
         if(intent.hasExtra("UserName")){
             namePlayer = intent.getStringExtra("UserName");
@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         scoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
 

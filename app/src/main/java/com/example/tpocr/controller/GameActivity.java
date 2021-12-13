@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,11 +26,11 @@ import com.example.tpocr.model.model.model.QuestionBank;
 
 import java.util.Arrays;
 import java.util.Locale;
-import java.lang.Object;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TextToSpeech mTextToSpeech;
+    private Boolean TTSOn;
 
     private TextView mQuestionTextView;
     private TextView mTimerTextView;
@@ -40,8 +39,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mGameButton3;
     private Button mGameButton4;
     private Button mFakeSkipButton;
-    private String correctornot;
-    private Boolean TTSOn;
+    private String mCorrectOrNot;
+
     QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
     private int questionNumber=9;
@@ -54,11 +53,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public static final String BUNDLE_STATE_SCORE = "BUNDLE_STATE_SCORE";
     public static final String BUNDLE_STATE_QUESTION = "BUNDLE_STATE_QUESTION";
     public static final String BUNDLE_QUESTION_BANK = "BUNDLE_QUESTION_BANK";
-    //public static final String BUNDLE_STATE_QUESTION_CURRENT = "BUNDLE_STATE_QUESTION_CURRENT";
     private DatabaseManager databaseManager;
 
     public static final long COUNTDOWN_IN_MILLIS = 10000;
-    //private ColorStateList textColorDefaultCd; //changement couleur countdown
 
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
@@ -81,7 +78,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         outState.putInt(BUNDLE_STATE_SCORE, mScore);
         outState.putInt(BUNDLE_STATE_QUESTION, mRemainingQuestionCount);
         outState.putParcelable(BUNDLE_QUESTION_BANK, mQuestionBank);
-        //outState.putSerializable(BUNDLE_STATE_QUESTION_CURRENT, (Serializable) mCurrentQuestion);
     }
 
     @Override
@@ -95,7 +91,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         databaseManager = new DatabaseManager(this);
 
-        // On récupère le nom du joueur et le mode de jeu
+        // Get GameMode and UserName
         Intent intent = getIntent();
         namePlayer = intent.getStringExtra("UserName");
         gameMode = intent.getStringExtra("GameMode");
@@ -138,7 +134,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        //textColorDefaultCd = mTimerTextView.getTextColors();
 
         mEnableTouchEvents = true;
 
@@ -146,14 +141,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
         if (savedInstanceState != null) {
-            //Log.d("STATE", savedInstanceState.toString());
             mScore = savedInstanceState.getInt(BUNDLE_STATE_SCORE);
             mRemainingQuestionCount = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
             mQuestionBank = savedInstanceState.getParcelable(BUNDLE_QUESTION_BANK);
 
 
         } else {
-            //Log.d("FAIL", savedInstanceState.toString());
             mScore = 0;
             mRemainingQuestionCount = questionNumber;
             mQuestionBank = generateQuestion();
@@ -287,7 +280,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void displayQuestion(final Question question) {
 
-// Set the text for the question text view and the four
+    // Set the text for the question text view and the four
         String q=question.getQuestion();
         mQuestionTextView.setText(q);
         String a1=question.getChoiceList().get(0);
@@ -299,7 +292,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String a4=question.getChoiceList().get(3);
         mGameButton4.setText(a4);
         if(!TTSOn) return;
-        String toSpeak = q + ";"+ a1 + ";"+ a2 + ";"+ a3 + ";"+ a4;
+        //if TTS set off, function will simply exit. If not, it will initiate the TTS engine
+        String toSpeak = q + ";"+ a1 + ";"+ a2 + ";"+ a3 + ";"+ a4; // ";" to make reading easier
         mTextToSpeech=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -334,20 +328,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             throw new IllegalStateException("Unknown clicked view : " + v);
         }
 
-        // Bonne réponse / mauvaise
+        // Right answer / wrong answer
         if (index == mQuestionBank.getCurrentQuestion().getAnswerIndex()){
-            correctornot="Correct !";
+            mCorrectOrNot ="Correct !";
             mScore++;
         } else {
-            correctornot="Incorrect !";
+            mCorrectOrNot ="Incorrect !";
         }
 
-        //désactive les boutons
+        //deactivates the buttons
         mEnableTouchEvents = false;
         countDownTimer.cancel();
 
+        //create delay after answering a question, only in Timed Gamemode
         if(mGamemode==1) {
-            Toast.makeText(this, correctornot, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, mCorrectOrNot, Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
 
                 @Override
@@ -355,7 +350,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     // If this is the last question, ends the game.
                     // Else, display the next question.
 
-                    // passer à la question suivante / fin de partie
+                    // Showing next Question / end of game
                     mRemainingQuestionCount--;
 
                     if (mRemainingQuestionCount > 0) {
@@ -370,7 +365,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         databaseManager.close();
                         endGame();
                     }
-                    // on réactive les boutons après le timer
+                    // Reactivating buttons after showing new question
                     mEnableTouchEvents = true;
 
                 }
@@ -382,7 +377,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void createAlertDialog(Question q){
         AlertDialog.Builder alertDialog1  = new AlertDialog.Builder(this);
-        String str = "You are " + correctornot + " ! \n"  ;
+        String str = "You are " + mCorrectOrNot + " ! \n"  ;
         alertDialog1.setTitle(str)
                 .setMessage("Do you want to know more about this question ? ")
                 .setIcon(R.mipmap.ic_launcher)
@@ -421,7 +416,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             databaseManager.close();
             endGame();
         }
-        // on réactive les boutons après le timer
+        // Reactivating buttons after showing new question
         mEnableTouchEvents = true;
     }
 
@@ -447,6 +442,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFinish() {
                 timeLeftInMillis =0;
+                //if timer over and in timed gamemode, simulate wrong answer button press
                 if(mGamemode==1) onClick(mFakeSkipButton);
                 updateCountDownText();
 
