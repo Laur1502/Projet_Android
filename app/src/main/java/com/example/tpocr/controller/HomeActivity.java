@@ -10,13 +10,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.tpocr.R;
 
 public class HomeActivity extends AppCompatActivity {
 
     private Button normalGameBtn, timedGameBtn, scoreBtn;
+    private ToggleButton mToggleButton;
     private TextView greetingTV;
     private String namePlayer;
     private static final int GAME_ACTIVITY_REQUEST_CODE = 42;
@@ -50,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         timedGameBtn = (Button) findViewById(R.id.timer_mode);
         scoreBtn = (Button) findViewById(R.id.scores);
         greetingTV = findViewById(R.id.home_textview_greeting);
+        mToggleButton = findViewById(R.id.toggle_button);
         greetingTV.setText(greetingTV.getText() + " "+ username);
 
         normalGameBtn.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences.Editor edit = userDetails.edit();
                 edit.putInt("gamemode",0);
+                edit.putBoolean("TTS",mToggleButton.isChecked());
                 edit.apply();
                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                 intent.putExtra("UserName", namePlayer);
@@ -65,11 +70,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            }
+        });
+
         timedGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor edit = userDetails.edit();
                 edit.putInt("gamemode",1);
+                edit.putBoolean("TTS",mToggleButton.isChecked());
                 edit.apply();
                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                 intent.putExtra("UserName", namePlayer);
@@ -77,6 +89,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         scoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override

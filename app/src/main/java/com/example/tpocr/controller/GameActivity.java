@@ -41,6 +41,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button mGameButton4;
     private Button mFakeSkipButton;
     private String correctornot;
+    private Boolean TTSOn;
     QuestionBank mQuestionBank ;
     Question mCurrentQuestion;
     private int questionNumber=9;
@@ -87,6 +88,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
         mGamemode = userDetails.getInt("gamemode",0);
+        TTSOn = userDetails.getBoolean("TTS",false);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
@@ -296,6 +298,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mGameButton3.setText(a3);
         String a4=question.getChoiceList().get(3);
         mGameButton4.setText(a4);
+        if(!TTSOn) return;
         String toSpeak = q + " "+ a1 + " "+ a2 + " "+ a3 + " "+ a4;
         mTextToSpeech=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
