@@ -42,6 +42,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
             + " answerIndex int NOT NULL,"
             + " wikiLink text)";
 
+    private static final String CREATE_TABLE_GAME = "CREATE TABLE Game ("
+            + "idGame integer PRIMARY KEY autoincrement,"
+            + "namePlayer text NOT NULL,"
+            + "modeJeu text NOT NULL,"
+            + "score int NOT NULL,"
+            + "dateJeu datetime default current_timestamp)";
+
 
 
     @Override
@@ -50,6 +57,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         //Exécute les create table
         db.execSQL(CREATE_TABLE_PLAYER);
         db.execSQL(CREATE_TABLE_QUESTIONBANK);
+        db.execSQL(CREATE_TABLE_GAME);
 
         // Ajoute les questions en BDD
         fillQuestionsTable(db);
@@ -62,6 +70,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists Player");
         db.execSQL("drop table if exists QuestionBank");
+        db.execSQL("drop table if exists Game");
 
     }
 
@@ -69,13 +78,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     //---------------------------------------------------------------------------- PARTIE PLAYER ----------------------------------------------------------------------------
 
-    //    public void insertPlayer(String name){
-//        name = name.replace("'", "''");
-//        String strSql = "INSERT INTO Player(name, dateCreation, accessibilityOn, wikiOn) VALUES ('"
-//                      + name + "', " + new Date().getTime() + ", 0, 0)";
-//        this.getWritableDatabase().execSQL(strSql);
-//        Log.i("DATABASE", "INSERT invoked");
-//    }
     public Boolean insertPlayer(String username, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -112,7 +114,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
     }
 
-    // ----------------------------------------------------------------------- PARTIE QUESTION BANK ----------------------------------------------------------------------------
+    // ----------------------------------------------------------------------- PARTIE GAME ----------------------------------------------------------------------------
+
+    public void insertGame(String namePlayer, String modeJeu, int score){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("namePlayer", namePlayer);
+        contentValues.put("modeJeu", modeJeu);
+        contentValues.put("score", score);
+        db.insert("Game", null, contentValues);
+
+    }
+
+    // ---------------------------------------------------- PARTIE QUESTION BANK (Enregistrement en BDD OK, partie lecture non fonctionnelle------------------------------
     private void fillQuestionsTable(SQLiteDatabase db){
         Question question1 = new Question(
                 "Who is the creator of Android?",
@@ -251,16 +265,4 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-//    public List<Question> getAllQuestions(){
-//        List<Question> questionList = new ArrayList<>();
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db = getReadableDatabase();
-//        Cursor c = db.rawQuery("SELECT * FROM QuestionBank", null);
-//
-//        if(c.moveToFirst()){
-//            do{
-//                Question question = new Question();
-//            }while(c.moveToNext());
-//        }
-//    }
 }

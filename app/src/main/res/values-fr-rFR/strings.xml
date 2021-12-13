@@ -16,4 +16,8 @@
     <string name="normal_game_mode">Mode de jeu normale</string>
     <string name="timer_game_mode">Mode de Jeu à Timer</string>
     <string name="scores_page">Scoreboard</string>
+
+    <string name="well_done">Bien Joué!</string>
+    <string name="your_score_is">votre score est</string>
+    <string name="home_score">Accueil</string>
 </resources>

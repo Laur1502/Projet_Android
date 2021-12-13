@@ -30,17 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private Button mSoundPlayButton;
 
 
-    //Récupère le score de gameActivity
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (GAME_ACTIVITY_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
-            // Fetch the score from the Intent
-            int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, 0);
-        }
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +50,11 @@ public class MainActivity extends AppCompatActivity {
                 if(mediaPlayer.isPlaying())
                 {
                     pauseSound();
-                    //mSoundPlayButton.setBackgroundResource(R.drawable.play);
                 }
 
                 else
                 {
                     playSound();
-                    //mSoundPlayButton.setBackgroundResource(R.drawable.pause);
                 }
             }
         });
@@ -90,24 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                mPlayButton.setEnabled(!s.toString().isEmpty());
             }
         });
-
-//        mPlayButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//
-////                databaseManager.insertPlayer(username.getText().toString());
-////                databaseManager.close();
-//
-//
-//                Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-//                startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
-//
-//
-//            }
-//        });
 
         signup.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -131,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                 edit.apply();
                                 Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                intent.putExtra("UserName", username.getText().toString());
                                 startActivity(intent);
                             }else{
                                 Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
