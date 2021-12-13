@@ -373,11 +373,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 }, 1_000); // LENGTH_SHORT is usually 2 second long*/
         }
-        else createAlterDialog(mQuestionBank.getCurrentQuestion());
+        else createAlertDialog(mQuestionBank.getCurrentQuestion());
 
     }
 
-    private void createAlterDialog(Question q){
+    private void createAlertDialog(Question q){
         AlertDialog.Builder alertDialog1  = new AlertDialog.Builder(this);
         String str = "You are " + correctornot + " ! \n"  ;
         alertDialog1.setTitle(str)
