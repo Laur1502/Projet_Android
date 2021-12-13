@@ -94,9 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         scoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ScoreActivity.class);
-                intent.putExtra("UserName", namePlayer);
-                startActivity(intent);
+                
             }
         });
 

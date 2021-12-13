@@ -299,7 +299,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String a4=question.getChoiceList().get(3);
         mGameButton4.setText(a4);
         if(!TTSOn) return;
-        String toSpeak = q + " "+ a1 + " "+ a2 + " "+ a3 + " "+ a4;
+        String toSpeak = q + ";"+ a1 + ";"+ a2 + ";"+ a3 + ";"+ a4;
         mTextToSpeech=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
