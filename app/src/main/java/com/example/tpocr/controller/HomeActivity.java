@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // On récupère le nom du joueur et on l'affiche
+        // On récupère le nom du joueur
         Intent intent = getIntent();
         if(intent.hasExtra("UserName")){
             namePlayer = intent.getStringExtra("UserName");
@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         scoreBtn = (Button) findViewById(R.id.scores);
         greetingTV = findViewById(R.id.home_textview_greeting);
         greetingTV.setText(greetingTV.getText() + " "+ username);
+
         normalGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
