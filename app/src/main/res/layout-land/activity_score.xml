@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context=".controller.LoginActivity"
+    android:background="@drawable/drawable_gradient2">
+
+    <TextView
+        android:id="@+id/score_textview_greeting1"
+        style="@style/TextViewStyle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="50dp"
+        android:padding="8dp"
+        android:text="@string/well_done" />
+
+    <TextView
+        android:id="@+id/score_textview_greeting2"
+        style="@style/TextViewStyle1"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="60dp"
+        android:textSize="30sp"
+        android:padding="8dp"
+        android:text="@string/your_score_is" />
+
+    <TextView
+        android:id="@+id/score_textview_greeting3"
+        style="@style/TextViewStyle1"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="60dp"
+        android:textSize="30sp"
+        android:padding="8dp"
+        android:text="huju" />
+
+
+</LinearLayout>
